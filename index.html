@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayPal Transaction</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .container { max-width: 500px; margin: 0 auto; }
+        input, button { padding: 10px; margin: 10px 0; width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Send Payment via PayPal</h1>
+        <input type="email" id="email" placeholder="Recipient's PayPal Email (e.g., example@gmail.com)" required>
+        <input type="number" id="amount" placeholder="Amount (USD)" step="0.01" required>
+        <button onclick="createPayment()">Pay Now</button>
+    </div>
+
+    <script>
+        async function createPayment() {
+            const email = document.getElementById('email').value;
+            const amount = document.getElementById('amount').value;
+
+            // Call your backend server to create the payment
+            const response = await fetch('https://awe-paypal-site.herokuapp.com/create-payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, amount })
+            });
+
+            const payment = await response.json();
+            window.location.href = payment.links.find(link => link.rel === 'approve').href;
+        }
+    </script>
+</body>
+</html>
