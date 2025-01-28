@@ -24,7 +24,7 @@
             const amount = document.getElementById('amount').value;
 
             // Call your backend server to create the payment
-            const response = await fetch('https://awe-paypal-site.herokuapp.com/create-payment', {
+            const response = await fetch('https://your-app.up.railway.app/create-payment', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, amount })
